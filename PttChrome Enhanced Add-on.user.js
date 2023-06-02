@@ -13,7 +13,7 @@
 // @require      https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js
 // @require      https://cdnjs.cloudflare.com/ajax/libs/tippy.js/2.5.4/tippy.min.js
 // @require      https://cdnjs.cloudflare.com/ajax/libs/lz-string/1.4.4/lz-string.min.js
-// @require      https://openuserjs.org/src/libs/sizzle/GM_config.js
+// @require      https://github.com/sizzlemctwizzle/GM_config/raw/2207c5c1322ebb56e401f03c2e581719f909762a/gm_config.js
 // @require      https://greasyfork.org/scripts/372760-gm-config-lz-string/code/GM_config_lz-string.js?version=634230
 // @require      https://greasyfork.org/scripts/372675-flags-css/code/Flags-CSS.js?version=632757
 // @grant        GM_getValue
@@ -491,7 +491,7 @@ content: '                 -            ${gmc.get('whenHideAllShowInfo')}';
 	//const checkNode = document.querySelector('span.q2');
 	const checkNodes = document.querySelectorAll('span.q2');
 	let allShort = true;
-	for (let i in checkNodes) {
+	for (let i = 0; i < checkNodes.length; i++) {
 		if (checkNodes[i].innerHTML.length > 10) {
 			allShort = false;
 			break;
@@ -836,8 +836,8 @@ document.addEventListener("mouseout", function(event) {
 	exchangePusherLabel (event.target);
 });
 function exchangePusherLabel (pushNode) {
-	if ((isTerm && pushNode.parentNode && pushNode.parentNode.previousSibling && pushNode.parentNode.previousSibling.hasAttribute('data-floor') && pushNode.parentNode.firstChild===pushNode
-		|| !isTerm && pushNode.previousSibling && pushNode.previousSibling.hasAttribute('data-floor'))
+	if ((isTerm && pushNode.parentNode && pushNode.parentNode.previousSibling && pushNode.parentNode.previousSibling.nodeName != '#text' && pushNode.parentNode.previousSibling.hasAttribute('data-floor') && pushNode.parentNode.firstChild===pushNode
+		|| !isTerm && pushNode.previousSibling && pushNode.previousSibling.nodeName != '#text' && pushNode.previousSibling.hasAttribute('data-floor'))
 		&& pushNode.dataset.label) {
 		let temp = pushNode.innerHTML;
 		pushNode.innerHTML = pushNode.dataset.label;
@@ -909,7 +909,7 @@ document.addEventListener("click", function(event) {
 
 		/******************************* (D) Dropdown Menu *******************************/
 		let hasMenuBefore = false;
-		let correctElementToEnableMenu = isPusherId(event.target) || event.target.previousSibling.innerHTML==' 作者 ';
+		let correctElementToEnableMenu = isPusherId(event.target) || (event.target.previousSibling && event.target.previousSibling.innerHTML==' 作者 ');
 		let isClickingMenu = event.target.parentNode.id == 'dropdownMenu';
 		if (correctElementToEnableMenu) {
 			hasMenuBefore = event.target.parentNode.lastChild.id == 'dropdownMenu';
